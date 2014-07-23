@@ -33,14 +33,9 @@ def make_parser():
     parser.add_argument('-o',
                         '--output',
                         required=False,
-                        help="Specify output file")
+                        help="Specify output PHYLIP file")
     parser.add_argument('--inplace',
                         required=False,
                         action='store_true',
-                        help="Flatten FASTA file inplace")
-    return parser.parse_args()
-
-
-args = make_parser()
-
-print(args)
+                        help="Flatten FASTA file in place")
+    return vars(parser.parse_args())
