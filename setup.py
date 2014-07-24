@@ -10,7 +10,7 @@ setup(
     license='MIT',
     author='David M Noriega',
     author_email='davidmnoriega@gmail.com',
-    version='0.1.dev',
+    version='1.0',
     install_requires=['numpy', 'pyfasta'],
     packages=['fast2phy'],
     entry_points={
