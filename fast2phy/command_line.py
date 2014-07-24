@@ -9,7 +9,8 @@ class DefaultParser(ArgumentParser):
     otherwise, only print the error."""
     def error(self, message):
         stderr.write('error: %s\n' % message)
-        if 'required' in message:
+        # Fix for Python 3.2
+        if 'required' or 'too few' in message:
             self.print_help()
         exit(2)
 

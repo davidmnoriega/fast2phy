@@ -22,50 +22,53 @@ def main():
         f = Fasta(args.fasta_file)
 
     if args.output_file is not None:
-        output = open(args.output_file, 'w')
+        output_file = args.output_file
     else:
         output_file_name = args.fasta_file.split('.')[0]
         output_file = '{0}.phylip'.format(output_file_name)
-        output = open(output_file, 'w')
 
     sequence_count = len(f.keys())
-    sequence_length = len(f[next(iter(f.keys()))])
-    # print('', sequence_count, sequence_length, sep=' ')
-    output.write(' {0} {1}\n'.format(sequence_count, sequence_length))
 
-    for key in f.keys():
-        subseq = []
-        for chunk in grouper(f[key][:LINE_LENGTH], CHUNK_LENGTH):
-            subseq.append(''.join(item[0] for item in chunk))
-        subseq = ' '.join(subseq)
-        if len(key) < CHUNK_LENGTH:
-            key = key.ljust(CHUNK_LENGTH)
-        else:
-            key = key[:CHUNK_LENGTH]
-        # print(key, ' ', subseq)
-        output.write('{0} {1}\n'.format(key, subseq))
-
-    sequence_length -= LINE_LENGTH
-    start = LINE_LENGTH
-    stop = LINE_LENGTH * 2
-    # print()
-    output.write('\n')
-
-    while sequence_length > 0:
+    with open(output_file, 'w+b') as output:
+        first = 1
         for key in f.keys():
+            if first == 1:
+                sequence_length = len(f[key])
+                output.write(' {0} {1}\n'.format(sequence_count, sequence_length))
+                first += 1
+
             subseq = []
-            for chunk in grouper(f[key][start:stop], CHUNK_LENGTH, ' '):
+            for chunk in grouper(f[key][:LINE_LENGTH], CHUNK_LENGTH):
                 subseq.append(''.join(item[0] for item in chunk))
             subseq = ' '.join(subseq)
-            # print(PAD_STRING, ' ', subseq)
-            output.write('{0} {1}\n'.format(PAD_STRING, subseq))
+            if len(key) < CHUNK_LENGTH:
+                key = key.ljust(CHUNK_LENGTH)
+            else:
+                key = key[:CHUNK_LENGTH]
+
+            output.write('{0} {1}\n'.format(key, subseq))
+            output.flush()
+
         sequence_length -= LINE_LENGTH
-        start += LINE_LENGTH
-        stop += LINE_LENGTH
-        # print()
+        start = LINE_LENGTH
+        stop = LINE_LENGTH * 2
+
         output.write('\n')
 
-    output.close()
+        while sequence_length > 0:
+            for key in f.keys():
+                subseq = []
+                for chunk in grouper(f[key][start:stop], CHUNK_LENGTH, ' '):
+                    subseq.append(''.join(item[0] for item in chunk))
+                subseq = ' '.join(subseq)
+
+                output.write('{0} {1}\n'.format(PAD_STRING, subseq))
+            sequence_length -= LINE_LENGTH
+            start += LINE_LENGTH
+            stop += LINE_LENGTH
+
+            output.write('\n')
+            output.flush()
 
 
 if __name__ == '__main__':
