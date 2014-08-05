@@ -31,13 +31,20 @@ def make_parser():
                         metavar='FILE',
                         type=check_file,
                         help="Aligned FASTA file to convert")
-    parser.add_argument('-o',
-                        '--output',
-                        required=False,
-                        dest='output_file',
-                        help="Specify output PHYLIP file")
     parser.add_argument('--inplace',
                         required=False,
                         action='store_true',
                         help="Flatten FASTA file in place")
+
+    parser_group = parser.add_mutually_exclusive_group()
+
+    parser_group.add_argument('--output',
+                              required=False,
+                              dest='output_file',
+                              help="Specify output PHYLIP file")
+    parser_group.add_argument('--stdout',
+                              required=False,
+                              action='store_true',
+                              help="Print to stdout instead of file")
+
     return parser.parse_args()

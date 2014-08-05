@@ -19,9 +19,9 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  -o OUTPUT, --output OUTPUT
-                        Specify output PHYLIP file
   --inplace             Flatten FASTA file in place
+  --output OUTPUT_FILE  Specify output PHYLIP file
+  --stdout              Print to stdout instead of file
 ```
 
 By default, fast2phy will take the specified aligned fasta file and output an interleaved phylip file. 
@@ -32,3 +32,6 @@ be desired if the original fasta file is very large. Using the `--inplace` optio
 keeping a valid fasta file, but will remove all the new line characters.
 
 Read pyfasta's [README](https://github.com/brentp/pyfasta/blob/master/README.rst#flattening) for more details.
+
+The `--stdout` option will instead print the generated PHYLIP file to the screen. This is useful if you want to pipe 
+the results to another program, like gzip.
