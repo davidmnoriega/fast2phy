@@ -34,10 +34,8 @@ original fasta file is very large. Using the `--inplace` option will keep the
 headers in place, keeping a valid fasta file, but will remove all the new line
 characters.
 
-Read pyfasta's [README](pyfasta) for more details.
+Read pyfasta's [README](https://github.com/brentp/pyfasta/blob/master/README.rst#flattening) for more details.
 
 The `--stdout` option will instead print the generated PHYLIP file to the
 screen. This is useful if you want to pipe  the results to another program, like
 gzip.
-
-[pyfasta]: https://github.com/brentp/pyfasta/blob/master/README.rst#flattening
