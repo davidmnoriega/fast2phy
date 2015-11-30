@@ -1,4 +1,4 @@
-from itertools import zip_longest
+from itertools import izip_longest
 from pyfasta import Fasta
 from fast2phy.command_line import make_parser
 from fast2phy.writer import Writer
@@ -12,7 +12,7 @@ def grouper(iterable, n, fillvalue=None):
     "Collect data into fixed-length chunks or blocks"
     # grouper('ABCDEFG', 3, 'x') --> ABC DEF Gxx"
     args = [iter(iterable)] * n
-    return zip_longest(*args, fillvalue=fillvalue)
+    return izip_longest(*args, fillvalue=fillvalue)
 
 
 def process_fasta(data, output):

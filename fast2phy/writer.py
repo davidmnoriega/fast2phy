@@ -16,7 +16,7 @@ class Writer(object):
 
     def write(self, data):
         if self.stdout:
-            print(data, end='')
+            print data,
         elif self.file:
             self.file.write(data)
 
